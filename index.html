@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .canvas-container {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="canvas-container">
+      <canvas id="canvasElm"></canvas>
+    </div>
+    <script>
+      const canvas = document.getElementById('canvasElm');
+      canvasElm.width = 300;
+      canvasElm.height = 300;
+      canvasElm.style.width = 500 + 'px';
+      canvasElm.style.border = `1px solid red`;
+      const ctx = canvasElm.getContext('2d');
+      ctx.fillStyle = 'pink';
+      ctx.fillRect(0, 0, 150, 150);
+      /**
+       * @param {number} designWidth: 设计稿上的canvas宽度
+       * @param {number} width: 设计稿的宽度
+       * @param {Element} canvasElm: canvas元素
+       */
+      function adaptMobile(designWidth, width, canvasElm) {
+        const ratio = designWidth / width; // 目标canvas占屏幕的宽度比例
+        const screenPx = screen.width; // 当前设备的宽度dip像素数
+        const canvasWidth = parseInt(canvasElm.style.width); // canvas的宽度
+        canvasElm.style.transformOrigin = '0 0';
+        canvasElm.style.transform = `scale(${ratio * screenPx / canvasWidth})`;
+      }
+      adaptMobile(375, 750, canvasElm);
+    </script>
+  </body>
+</html>
